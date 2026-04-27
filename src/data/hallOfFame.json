@@ -3,15 +3,15 @@
     "id": 1,
     "title": "The High Alchemist",
     "description": "Alch an item worth over 100M. Turning gold into slightly less gold, at scale.",
-    "completed": true,
-    "imageUrl": "/halloffame/100m_alch.gif"
+    "completed": false,
+    "imageUrl": null
   },
   {
     "id": 2,
     "title": "The Forbidden Word",
     "description": "Convince Harry to say \"Pregnant\" in clan chat. No context provided.",
-    "completed": true,
-    "imageUrl": "/halloffame/pregnant.png"
+    "completed": false,
+    "imageUrl": null
   },
   {
     "id": 3,
@@ -24,15 +24,15 @@
     "id": 4,
     "title": "Betrayal in the Raid",
     "description": "PK a TEA member mid-raid and flame them in clan chat. Friendship is temporary, loot is eternal.",
-    "completed": true,
-    "imageUrl": "/halloffame/pk.gif"
+    "completed": false,
+    "imageUrl": null
   },
   {
     "id": 5,
     "title": "The Infernal Teapot",
     "description": "Complete the Inferno using only Tea as your food source. Hydration over health.",
-    "completed": true,
-    "imageUrl": "/halloffame/tea_inferno.png"
+    "completed": false,
+    "imageUrl": null
   },
   {
     "id": 6,
@@ -59,8 +59,8 @@
     "id": 9,
     "title": "First Blood",
     "description": "Obtain a rare unique on your very first kill count at a boss. Beginner's luck is an understatement.",
-    "completed": true,
-    "imageUrl": "/halloffame/spoon_justi.png"
+    "completed": false,
+    "imageUrl": null
   },
   {
     "id": 10,

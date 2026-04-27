@@ -122,13 +122,13 @@ Thresholds and colors are defined in `RANK_TIERS` in `StatTrackers.vue`:
 
 ```js
 const RANK_TIERS = [
-    { min: 65000, name: 'Dragon', cls: 'rank-dragon' },
-    { min: 47500, name: 'Rune', cls: 'rank-rune' },
-    { min: 32000, name: 'Adamant', cls: 'rank-adamant' },
-    { min: 22000, name: 'Mithril', cls: 'rank-mithril' },
-    { min: 10000, name: 'Steel', cls: 'rank-steel' },
-    { min: 4000, name: 'Iron', cls: 'rank-iron' },
-    { min: 2000, name: 'Bronze', cls: 'rank-bronze' },
+    { min: 60000, name: 'Dragon',  cls: 'rank-dragon'  },
+    { min: 45000, name: 'Rune',    cls: 'rank-rune'    },
+    { min: 30000, name: 'Adamant', cls: 'rank-adamant' },
+    { min: 20000, name: 'Mithril', cls: 'rank-mithril' },
+    { min: 10000, name: 'Steel',   cls: 'rank-steel'   },
+    { min:  4000, name: 'Iron',    cls: 'rank-iron'    },
+    { min:  2000, name: 'Bronze',  cls: 'rank-bronze'  },
 ]
 ```
 

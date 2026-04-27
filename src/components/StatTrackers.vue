@@ -19,12 +19,12 @@
                         <span class="card-leader">
                             #1 {{ topPlayer(tracker.key)?.name }}
                             <span class="leader-val">{{ tracker.format(topPlayer(tracker.key)?.[tracker.key] ?? 0)
-                            }}</span>
+                                }}</span>
                         </span>
+                        <button class="expand-btn" :aria-label="expanded[tracker.key] ? 'Collapse' : 'Expand'">
+                            <span class="expand-chevron" :class="{ 'is-open': expanded[tracker.key] }">▾</span>
+                        </button>
                     </div>
-                    <button class="expand-btn" :aria-label="expanded[tracker.key] ? 'Collapse' : 'Expand'">
-                        <span class="expand-chevron" :class="{ 'is-open': expanded[tracker.key] }">▾</span>
-                    </button>
                 </div>
 
                 <Transition name="expand">
@@ -60,10 +60,10 @@ import { reactive } from 'vue'
 import { players } from '@/stores/statsStore.js'
 
 const RANK_TIERS = [
-    { min: 65000, name: 'Dragon', cls: 'rank-dragon' },
-    { min: 47500, name: 'Rune', cls: 'rank-rune' },
-    { min: 32000, name: 'Adamant', cls: 'rank-adamant' },
-    { min: 22000, name: 'Mithril', cls: 'rank-mithril' },
+    { min: 60000, name: 'Dragon', cls: 'rank-dragon' },
+    { min: 45000, name: 'Rune', cls: 'rank-rune' },
+    { min: 30000, name: 'Adamant', cls: 'rank-adamant' },
+    { min: 20000, name: 'Mithril', cls: 'rank-mithril' },
     { min: 10000, name: 'Steel', cls: 'rank-steel' },
     { min: 4000, name: 'Iron', cls: 'rank-iron' },
     { min: 2000, name: 'Bronze', cls: 'rank-bronze' },
@@ -157,6 +157,7 @@ function barWidth(val, key) {
 .card-header {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     padding: 13px 16px 11px;
     cursor: pointer;
     user-select: none;
@@ -177,7 +178,7 @@ function barWidth(val, key) {
     display: flex;
     align-items: baseline;
     gap: 12px;
-    flex: 0 0 auto;
+    min-width: 0;
 }
 
 .card-label {
@@ -202,8 +203,8 @@ function barWidth(val, key) {
 .card-meta {
     display: flex;
     align-items: center;
-    justify-content: flex-end;
-    flex: 1 1 0;
+    gap: 12px;
+    flex-shrink: 1;
     min-width: 0;
     overflow: hidden;
 }
@@ -236,7 +237,6 @@ function barWidth(val, key) {
     justify-content: center;
     cursor: pointer;
     padding: 0;
-    flex-shrink: 0;
     transition: border-color 0.15s, background 0.15s;
 }
 
