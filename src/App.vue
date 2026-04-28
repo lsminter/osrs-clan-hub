@@ -3,7 +3,13 @@
   <div class="bg-overlay"></div>
 
   <!-- Auth Panel (shown when not authenticated) -->
-  <AuthPanel v-if="!isAuthenticated" @authenticated="handleAuthentication" />
+  <AuthPanel v-if="!isAuthenticated" />
+
+  <!-- Loading state while checking clan setup -->
+  <div v-else-if="isCheckingClan" class="loading-screen">
+    <p class="loading-text">Entering the Realm...</p>
+    <div class="loading-bar"><div class="loading-fill"></div></div>
+  </div>
 
   <!-- Clan Setup (shown after signup, before dashboard) -->
   <ClanSetup
@@ -65,6 +71,7 @@ const activePage = ref('home')
 const needsClanSetup = ref(false)
 const showWelcome = ref(false)
 const userClan = ref('')
+const isCheckingClan = ref(false)
 
 // Computed properties based on Clerk's authentication state
 const isAuthenticated = computed(() => isSignedIn?.value ?? false)
@@ -73,13 +80,14 @@ const currentUser = computed(() => user?.value?.username || user?.value?.firstNa
 // Check whether the signed-in user still needs to complete clan setup
 const checkClanSetup = async (clerkId) => {
   if (!clerkId) return
+  isCheckingClan.value = true
   try {
     const { data, error } = await supabase
       .from('Users')
       .select('clan')
       .eq('clerk_id', clerkId)
       .single()
-      console.log(data)
+      console.log("Check if user has a clan name", data)
     if (!error && data && data.clan === null) {
       needsClanSetup.value = true
       showWelcome.value = false
@@ -90,6 +98,8 @@ const checkClanSetup = async (clerkId) => {
     }
   } catch {
     needsClanSetup.value = false
+  } finally {
+    isCheckingClan.value = false
   }
 }
 
@@ -98,6 +108,7 @@ const handleClanSet = (clan) => {
   // null means the user skipped — go straight to the dashboard, prompt again next login
   if (clan === null) {
     showWelcome.value = false
+    console.log("handleClanSet: Clan equals null")
     return
   }
   userClan.value = clan
@@ -115,6 +126,7 @@ watch(isAuthenticated, (newValue) => {
     showWelcome.value = false
     userClan.value = ''
     activePage.value = 'home'
+    isCheckingClan.value = false
     closeStats()
   }
 }, { immediate: true })
@@ -128,11 +140,6 @@ watch(() => user?.value?.id, (newId) => {
 })
 
 onUnmounted(closeStats)
-
-const handleAuthentication = (authData) => {
-  // Authentication is now handled by Clerk automatically
-  // This function can be used for any additional setup when user signs in
-}
 
 const handleLogout = async () => {
   try {
@@ -217,6 +224,56 @@ body,
 </style>
 
 <style scoped>
+/* ── Loading screen ──────────────────────────────────────────────────────── */
+.loading-screen {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  z-index: 10;
+}
+
+.loading-text {
+  font-family: 'Cinzel Decorative', 'Cinzel', serif;
+  font-size: clamp(16px, 2.5vw, 24px);
+  font-weight: 700;
+  letter-spacing: 4px;
+  color: #ffd070;
+  text-shadow: 0 0 18px rgba(255, 179, 71, 0.5);
+  animation: pulse 1.6s ease-in-out infinite;
+}
+
+.loading-bar {
+  width: min(280px, 60vw);
+  height: 4px;
+  background: rgba(139, 0, 0, 0.25);
+  border-radius: 2px;
+  overflow: hidden;
+  border: 1px solid rgba(139, 0, 0, 0.4);
+}
+
+.loading-fill {
+  height: 100%;
+  width: 40%;
+  background: linear-gradient(90deg, transparent, #c0392b, #ffd070, #c0392b, transparent);
+  border-radius: 2px;
+  animation: sweep 1.4s ease-in-out infinite;
+}
+
+@keyframes sweep {
+  0%   { transform: translateX(-150%); }
+  100% { transform: translateX(350%); }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.5; }
+}
+
+/* ── Background ──────────────────────────────────────────────────────────── */
 .bg-video {
   position: fixed;
   inset: 0;

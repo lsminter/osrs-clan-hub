@@ -4,7 +4,13 @@
     <!-- Top bar -->
     <div class="top-bar">
       <button class="back-btn" @click="emit('back')">← Clan Home</button>
-      <button class="logout-btn" @click="emit('logout')">⚡ Logout</button>
+      <span class="top-bar-spacer"></span>
+      <div class="top-bar-right">
+        <span class="top-bar-username">{{ currentUser }}</span>
+        <button class="logout-btn" @click="emit('logout')">
+          ⚡ Logout
+        </button>
+      </div>
     </div>
 
     <!-- Page title -->
@@ -103,6 +109,51 @@ const activePanel = ref('stats')
   flex-shrink: 0;
 }
 
+/* ── Top bar ─────────────────────────────────────────────────── */
+.top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.top-bar-spacer {
+  flex: 1;
+}
+
+.top-bar-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.top-bar-username {
+  font-family: 'Cinzel', serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: #ffd070;
+}
+
+.logout-btn {
+  font-family: 'Cinzel', serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: #c8c0b8;
+  background: rgba(139, 0, 0, 0.2);
+  border: 1px solid rgba(139, 0, 0, 0.4);
+  border-radius: 4px;
+  padding: 6px 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.logout-btn:hover {
+  color: #ff6b35;
+  border-color: #8b0000;
+  background: rgba(139, 0, 0, 0.35);
+}
+
 /* ── Page title ──────────────────────────────────────────────────────────── */
 .page-title {
   font-family: 'Cinzel Decorative', 'Cinzel', serif;
@@ -159,14 +210,6 @@ const activePanel = ref('stats')
     overflow-y: visible;
     overflow-x: hidden;
     padding: 24px 16px 40px;
-  }
-
-  .side-left {
-    background: rgba(5, 0, 0, 0.78);
-  }
-
-  .side-right {
-    background: rgba(5, 0, 0, 0.78);
   }
 
   .middle-void {
