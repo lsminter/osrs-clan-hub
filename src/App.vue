@@ -26,12 +26,21 @@
     @logout="handleLogout"
   />
 
+  <!-- Clan Directory (navigated to from Clan Home) -->
+  <ClanDirectory
+    v-else-if="activePage === 'directory'"
+    :current-user="currentUser"
+    @back="activePage = 'home'"
+    @logout="handleLogout"
+  />
+
   <!-- Clan Home (default authenticated view) -->
   <ClanHomePage
     v-else
     :clan="userClan"
     :current-user="currentUser"
     @go-to-dashboard="activePage = 'leagues'"
+    @go-to-directory="activePage = 'directory'"
     @logout="handleLogout"
   />
 </template>
@@ -42,6 +51,7 @@ import AuthPanel from '@/components/AuthPanel.vue'
 import ClanSetup from '@/components/ClanSetup.vue'
 import ClanHomePage from '@/components/ClanHomePage.vue'
 import LeaguesDashboard from '@/components/LeaguesDashboard.vue'
+import ClanDirectory from '@/components/ClanDirectory.vue'
 import { initStats, closeStats } from '@/stores/statsStore.js'
 import { useAuth, useUser, useClerk } from '@clerk/vue'
 import { supabase } from '@/supabaseClient.js'
@@ -87,7 +97,7 @@ const checkClanSetup = async (clerkId) => {
       .select('clan')
       .eq('clerk_id', clerkId)
       .single()
-      console.log("Check if user has a clan name", data)
+      
     if (!error && data && data.clan === null) {
       needsClanSetup.value = true
       showWelcome.value = false
